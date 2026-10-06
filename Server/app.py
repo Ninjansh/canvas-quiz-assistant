@@ -22,7 +22,7 @@ client = genai.Client()
 
 # Locate lecture slides folder
 current_dir = pathlib.Path(__file__).resolve().parent
-source_dir = current_dir / "Operating System"  # Make sure this matches your folder name
+source_dir = current_dir / "UploadFilesHere"  # Make sure this matches your folder name
 
 pdf_paths = [
     p for p in source_dir.iterdir()
