@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Canvas OS Solver",
+  "version": "1.0",
+  "permissions": ["activeTab"],
+  "host_permissions": [
+    "http://127.0.0.1:8000/*",
+    "http://localhost:8000/*",
+    "https://canvas.skku.edu/*",
+    "https://canvas.uts.edu.au/*",
+    "https://*.instructure.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://canvas.skku.edu/*",
+        "https://canvas.uts.edu.au/*",
+        "https://*.instructure.com/*",
+        "file:///*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
