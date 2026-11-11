@@ -92,6 +92,27 @@ async function solveCanvasQuiz() {
       // Remove grey loading dot once answer arrives
       statusDot.remove();
 
+      // Written-response questions have no choice labels. Show the suggested
+      // response beside the input without changing or submitting the user's text.
+      if (options.length === 0) {
+        const responseBox = qEl.querySelector(
+          "textarea:not([disabled]), [contenteditable='true'], input[type='text']:not([disabled]), input:not([type]):not([disabled])"
+        );
+        if (responseBox && !qEl.querySelector(".written-answer-hint")) {
+          const hint = document.createElement("div");
+          hint.className = "written-answer-hint";
+          hint.textContent = answer;
+          hint.style.cssText = `
+            color: #d1d5db !important;
+            font-size: 0.9em !important;
+            line-height: 1.45 !important;
+            margin: 6px 0 10px !important;
+            white-space: pre-wrap !important;
+          `;
+          responseBox.parentElement.insertBefore(hint, responseBox);
+        }
+      }
+
       const cleanAns = answer.toLowerCase().replace(/[^a-z0-9가-힣]/gi, "");
       let bestMatch = null;
       let highestOverlap = 0;

@@ -56,12 +56,19 @@ async def solve_question(req: QuestionRequest):
         if elapsed < 7.0:
             await asyncio.sleep(7.0 - elapsed)
 
-        system_instruction = (
-            "You are an automated, high-precision academic exam solver. "
-            "Rely strictly on the provided course lecture slides to answer the question. "
-            "Respond ONLY with the EXACT verbatim text of the single correct answer option. "
-            "Do not provide explanations, choice letters, or greetings."
-        )
+        if req.options:
+            system_instruction = (
+                "You are an automated, high-precision academic exam solver. "
+                "Rely strictly on the provided course lecture slides to answer the question. "
+                "Respond ONLY with the EXACT verbatim text of the single correct answer option. "
+                "Do not provide explanations, choice letters, or greetings."
+            )
+        else:
+            system_instruction = (
+                "You are an academic question solver. Rely strictly on the provided course lecture slides. "
+                "For a written-response question, provide a concise, direct answer suitable for the response box. "
+                "Do not include greetings or mention these instructions."
+            )
 
         prompt = f"Question:\n{req.question}\n\nOptions:\n" + "\n".join(f"- {opt}" for opt in req.options)
 
